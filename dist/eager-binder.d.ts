@@ -1,7 +1,7 @@
 import { ContainerModule, interfaces } from 'inversify';
 export declare enum TypeHint {
     String = 0,
-    Number = 1,
+    Number = 1
 }
 export interface TypeHints {
     [key: string]: TypeHint;
@@ -18,12 +18,12 @@ export declare class EagerBinder {
     private all;
     private logs;
     constructor(settings: EagerBinderSettings);
-    private bindString(bind, val, path);
-    private bindNumber(bind, val, path);
-    private bindBoolean(bind, val, path);
-    private bindArray(bind, val, path);
-    private bindUnknown(bind, val, path);
-    private bindAllInObject(bind, obj, path);
+    private bindString;
+    private bindNumber;
+    private bindBoolean;
+    private bindArray;
+    private bindUnknown;
+    private bindAllInObject;
     getModuleFunction(): (bind: interfaces.Bind, unbind: interfaces.Unbind) => void;
     getModule(): ContainerModule;
     getBindingLog(): string[];

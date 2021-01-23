@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.defaultEagerBinderModule = exports.EagerBinder = exports.TypeHint = void 0;
 var inversify_1 = require("inversify");
 var config = require("config");
 var TypeHint;
