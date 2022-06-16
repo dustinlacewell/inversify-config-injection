@@ -22,10 +22,12 @@
     "watch": "npm run build -- --watch",
     "watch:test": "npm run test -- --watch"
   },
-  "dependencies": {
-    "config": "^1.24.0",
-    "inversify": "^5.0.5",
+  "peerDependencies": {
+    "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13"
+  },
+  "dependencies": {
+    "config": "^1.24.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
@@ -33,7 +35,7 @@
     "@types/mocha": "^2.0.0",
     "@types/node": "^8.0.28",
     "chai": "^4.1.2",
-    "mocha": "^4.0.1",
+    "mocha": "^10.0.0",
     "rimraf": "^2.0.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",

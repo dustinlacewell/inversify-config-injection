@@ -24,7 +24,7 @@ export declare class EagerBinder {
     private bindArray;
     private bindUnknown;
     private bindAllInObject;
-    getModuleFunction(): (bind: interfaces.Bind, unbind: interfaces.Unbind) => void;
+    getModuleFunction(): interfaces.ContainerModuleCallBack;
     getModule(): ContainerModule;
     getBindingLog(): string[];
 }

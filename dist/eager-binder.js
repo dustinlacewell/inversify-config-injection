@@ -30,39 +30,39 @@ var EagerBinder = (function () {
             this.all = config.get(this.settings.root);
         }
         else {
-            throw new Error("Could not find configuration root '" + this.settings.root + "'!");
+            throw new Error("Could not find configuration root '".concat(this.settings.root, "'!"));
         }
         this.logs = [];
     }
     EagerBinder.prototype.bindString = function (bind, val, path) {
         if (this.settings.log)
-            this.logs.push("Binding '" + path + "' to string '" + val + "'");
+            this.logs.push("Binding '".concat(path, "' to string '").concat(val, "'"));
         bind(path).toConstantValue(val);
     };
     EagerBinder.prototype.bindNumber = function (bind, val, path) {
         if (this.settings.log)
-            this.logs.push("Binding '" + path + "' to number '" + val + "'");
+            this.logs.push("Binding '".concat(path, "' to number '").concat(val, "'"));
         bind(path).toConstantValue(val);
     };
     EagerBinder.prototype.bindBoolean = function (bind, val, path) {
         if (this.settings.log)
-            this.logs.push("Binding '" + path + "' to boolean '" + val + "'");
+            this.logs.push("Binding '".concat(path, "' to boolean '").concat(val, "'"));
         bind(path).toConstantValue(val);
     };
     EagerBinder.prototype.bindArray = function (bind, val, path) {
         if (this.settings.typeHints[path] === TypeHint.String) {
             if (this.settings.log)
-                this.logs.push("Binding '" + path + "' to string[] '" + val + "'");
+                this.logs.push("Binding '".concat(path, "' to string[] '").concat(val, "'"));
             bind(path).toConstantValue(val);
         }
         else if (this.settings.typeHints[path] === TypeHint.Number) {
             if (this.settings.log)
-                this.logs.push("Binding '" + path + "' to number[] '" + val + "'");
+                this.logs.push("Binding '".concat(path, "' to number[] '").concat(val, "'"));
             bind(path).toConstantValue(val);
         }
         else {
             if (this.settings.log)
-                this.logs.push("Binding '" + path + "' to any[] '" + val + "'");
+                this.logs.push("Binding '".concat(path, "' to any[] '").concat(val, "'"));
             bind(path).toConstantValue(val);
         }
     };
@@ -86,7 +86,7 @@ var EagerBinder = (function () {
     EagerBinder.prototype.bindAllInObject = function (bind, obj, path) {
         if (this.settings.objects) {
             if (this.settings.log) {
-                this.logs.push("Binding '" + path + "' to Object '" + obj + "'");
+                this.logs.push("Binding '".concat(path, "' to Object '").concat(obj, "'"));
             }
             bind(path).toConstantValue(obj);
         }

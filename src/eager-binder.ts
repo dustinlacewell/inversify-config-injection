@@ -1,4 +1,4 @@
-import {ContainerModule, interfaces} from 'inversify';
+import { ContainerModule, interfaces } from 'inversify';
 import * as config from 'config';
 
 export enum TypeHint {
@@ -102,7 +102,7 @@ export class EagerBinder {
     }
   }
 
-  public getModuleFunction() {
+  public getModuleFunction(): interfaces.ContainerModuleCallBack {
     return (bind: interfaces.Bind, unbind: interfaces.Unbind) => {
       this.bindAllInObject(bind, this.all, this.settings.prefix);
     };
