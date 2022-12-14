@@ -32,6 +32,9 @@ var EagerBinder = (function () {
         else {
             throw new Error("Could not find configuration root '".concat(this.settings.root, "'!"));
         }
+        if (this.settings.schema) {
+            this.settings.schema.parse(this.all);
+        }
         this.logs = [];
     }
     EagerBinder.prototype.bindString = function (bind, val, path) {

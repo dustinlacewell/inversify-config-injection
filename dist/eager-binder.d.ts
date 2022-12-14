@@ -1,4 +1,5 @@
 import { ContainerModule, interfaces } from 'inversify';
+import { z } from 'zod';
 export declare enum TypeHint {
     String = 0,
     Number = 1
@@ -12,6 +13,7 @@ export interface EagerBinderSettings {
     log?: boolean;
     typeHints?: TypeHints;
     objects?: boolean;
+    schema?: z.ZodTypeAny;
 }
 export declare class EagerBinder {
     private settings;
