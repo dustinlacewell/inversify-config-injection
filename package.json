@@ -1,10 +1,13 @@
 {
-  "name": "inversify-config-injection",
+  "name": "@ldlework/inversify-config-injection",
   "version": "0.0.4",
-  "description": "inversify-config-injection",
+  "description": "Inject your application configuration.",
   "license": "MIT",
-  "repository": "https://github.com/cvrabie/inversify-config-injection",
-  "author": "Cristian Vrabie",
+  "repository": "https://github.com/dustinlacewell/inversify-config-injection",
+  "authors": [
+    { "name": "Cristian Vrabie" },
+    { "name": "Dustin Lacewell" }
+  ],
   "keywords": [
     "inversify",
     "node-config"
@@ -30,6 +33,7 @@
     "config": "^1.24.0"
   },
   "devDependencies": {
+    "inversify": "^6.0.1",
     "@types/chai": "^4.0.4",
     "@types/config": "0.0.33",
     "@types/mocha": "^2.0.0",
