@@ -1,6 +1,6 @@
 {
   "name": "@ldlework/inversify-config-injection",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Inject your application configuration.",
   "license": "MIT",
   "repository": "https://github.com/dustinlacewell/inversify-config-injection",
