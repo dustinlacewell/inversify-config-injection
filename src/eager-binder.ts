@@ -1,5 +1,6 @@
 import { ContainerModule, interfaces } from 'inversify';
 import * as config from 'config';
+import { z } from 'zod';
 
 export enum TypeHint {
   String, Number
@@ -15,6 +16,7 @@ export interface EagerBinderSettings {
   log?: boolean;
   typeHints?: TypeHints;
   objects?: boolean;
+  schema?: z.ZodTypeAny;
 }
 
 export class EagerBinder {
@@ -36,6 +38,10 @@ export class EagerBinder {
       this.all = config.get<object>(this.settings.root);
     } else {
       throw new Error(`Could not find configuration root '${this.settings.root}'!`);
+    }
+
+    if (this.settings.schema) {
+      this.settings.schema.parse(this.all);
     }
 
     this.logs = [];
