@@ -16,7 +16,7 @@ export interface EagerBinderSettings {
   log?: boolean;
   typeHints?: TypeHints;
   objects?: boolean;
-  schema?: z.ZodTypeAny;
+  schema?: z.ZodObject<any>;
 }
 
 export class EagerBinder {
