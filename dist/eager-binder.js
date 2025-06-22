@@ -1,15 +1,18 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultEagerBinderModule = exports.EagerBinder = exports.TypeHint = void 0;
-var inversify_1 = require("inversify");
-var config = require("config");
+const inversify_1 = require("inversify");
+const config = require("config");
 var TypeHint;
 (function (TypeHint) {
     TypeHint[TypeHint["String"] = 0] = "String";
     TypeHint[TypeHint["Number"] = 1] = "Number";
 })(TypeHint = exports.TypeHint || (exports.TypeHint = {}));
-var EagerBinder = (function () {
-    function EagerBinder(settings) {
+class EagerBinder {
+    settings;
+    all;
+    logs;
+    constructor(settings) {
         this.settings = settings;
         if (!this.settings)
             this.settings = {};
@@ -30,46 +33,46 @@ var EagerBinder = (function () {
             this.all = config.get(this.settings.root);
         }
         else {
-            throw new Error("Could not find configuration root '".concat(this.settings.root, "'!"));
+            throw new Error(`Could not find configuration root '${this.settings.root}'!`);
         }
         if (this.settings.schema) {
             this.settings.schema.parse(this.all);
         }
         this.logs = [];
     }
-    EagerBinder.prototype.bindString = function (bind, val, path) {
+    bindString(bind, val, path) {
         if (this.settings.log)
-            this.logs.push("Binding '".concat(path, "' to string '").concat(val, "'"));
+            this.logs.push(`Binding '${path}' to string '${val}'`);
         bind(path).toConstantValue(val);
-    };
-    EagerBinder.prototype.bindNumber = function (bind, val, path) {
+    }
+    bindNumber(bind, val, path) {
         if (this.settings.log)
-            this.logs.push("Binding '".concat(path, "' to number '").concat(val, "'"));
+            this.logs.push(`Binding '${path}' to number '${val}'`);
         bind(path).toConstantValue(val);
-    };
-    EagerBinder.prototype.bindBoolean = function (bind, val, path) {
+    }
+    bindBoolean(bind, val, path) {
         if (this.settings.log)
-            this.logs.push("Binding '".concat(path, "' to boolean '").concat(val, "'"));
+            this.logs.push(`Binding '${path}' to boolean '${val}'`);
         bind(path).toConstantValue(val);
-    };
-    EagerBinder.prototype.bindArray = function (bind, val, path) {
+    }
+    bindArray(bind, val, path) {
         if (this.settings.typeHints[path] === TypeHint.String) {
             if (this.settings.log)
-                this.logs.push("Binding '".concat(path, "' to string[] '").concat(val, "'"));
+                this.logs.push(`Binding '${path}' to string[] '${val}'`);
             bind(path).toConstantValue(val);
         }
         else if (this.settings.typeHints[path] === TypeHint.Number) {
             if (this.settings.log)
-                this.logs.push("Binding '".concat(path, "' to number[] '").concat(val, "'"));
+                this.logs.push(`Binding '${path}' to number[] '${val}'`);
             bind(path).toConstantValue(val);
         }
         else {
             if (this.settings.log)
-                this.logs.push("Binding '".concat(path, "' to any[] '").concat(val, "'"));
+                this.logs.push(`Binding '${path}' to any[] '${val}'`);
             bind(path).toConstantValue(val);
         }
-    };
-    EagerBinder.prototype.bindUnknown = function (bind, val, path) {
+    }
+    bindUnknown(bind, val, path) {
         if (typeof val === 'string') {
             this.bindString(bind, val, path);
         }
@@ -85,37 +88,35 @@ var EagerBinder = (function () {
         else if (typeof val === 'object') {
             this.bindAllInObject(bind, val, path);
         }
-    };
-    EagerBinder.prototype.bindAllInObject = function (bind, obj, path) {
+    }
+    bindAllInObject(bind, obj, path) {
         if (this.settings.objects) {
             if (this.settings.log) {
-                this.logs.push("Binding '".concat(path, "' to Object '").concat(obj, "'"));
+                this.logs.push(`Binding '${path}' to Object '${obj}'`);
             }
             bind(path).toConstantValue(obj);
         }
         if (path && path.length > 0) {
             path = path + ".";
         }
-        for (var k in obj) {
+        for (const k in obj) {
             if (obj.hasOwnProperty(k)) {
                 this.bindUnknown(bind, obj[k], path + k);
             }
         }
-    };
-    EagerBinder.prototype.getModuleFunction = function () {
-        var _this = this;
-        return function (bind, unbind) {
-            _this.bindAllInObject(bind, _this.all, _this.settings.prefix);
+    }
+    getModuleFunction() {
+        return (bind, unbind) => {
+            this.bindAllInObject(bind, this.all, this.settings.prefix);
         };
-    };
-    EagerBinder.prototype.getModule = function () {
+    }
+    getModule() {
         return new inversify_1.ContainerModule(this.getModuleFunction());
-    };
-    EagerBinder.prototype.getBindingLog = function () {
+    }
+    getBindingLog() {
         return this.logs;
-    };
-    return EagerBinder;
-}());
+    }
+}
 exports.EagerBinder = EagerBinder;
 exports.defaultEagerBinderModule = new EagerBinder({}).getModule();
-exports["default"] = exports.defaultEagerBinderModule;
+exports.default = exports.defaultEagerBinderModule;
