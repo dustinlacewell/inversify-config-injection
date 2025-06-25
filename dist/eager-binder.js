@@ -7,7 +7,7 @@ var TypeHint;
 (function (TypeHint) {
     TypeHint[TypeHint["String"] = 0] = "String";
     TypeHint[TypeHint["Number"] = 1] = "Number";
-})(TypeHint = exports.TypeHint || (exports.TypeHint = {}));
+})(TypeHint || (exports.TypeHint = TypeHint = {}));
 class EagerBinder {
     settings;
     all;
@@ -106,7 +106,8 @@ class EagerBinder {
         }
     }
     getModuleFunction() {
-        return (bind, unbind) => {
+        return (options) => {
+            const { bind } = options;
             this.bindAllInObject(bind, this.all, this.settings.prefix);
         };
     }

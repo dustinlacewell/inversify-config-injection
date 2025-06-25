@@ -1,6 +1,9 @@
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, ContainerModuleLoadOptions } from 'inversify';
 import * as config from 'config';
 import { z } from 'zod';
+
+export type Bind = ContainerModuleLoadOptions["bind"];
+export type Unbind = ContainerModuleLoadOptions["unbind"];
 
 export enum TypeHint {
   String, Number
@@ -23,8 +26,10 @@ export class EagerBinder {
 
   private all: object;
   private logs: string[];
+  private settings: EagerBinderSettings;
 
-  constructor(private settings: EagerBinderSettings) {
+  constructor(settings: EagerBinderSettings) {
+    this.settings = settings;
     if (!this.settings) this.settings = {};
     if (!this.settings.root) this.settings.root = "";
     if (!this.settings.prefix) this.settings.prefix = "";
@@ -47,22 +52,22 @@ export class EagerBinder {
     this.logs = [];
   }
 
-  private bindString(bind: interfaces.Bind, val: string, path: string) {
+  private bindString(bind: Bind, val: string, path: string) {
     if (this.settings.log) this.logs.push(`Binding '${path}' to string '${val}'`);
     bind<string>(path).toConstantValue(val);
   }
 
-  private bindNumber(bind: interfaces.Bind, val: number, path: string) {
+  private bindNumber(bind: Bind, val: number, path: string) {
     if (this.settings.log) this.logs.push(`Binding '${path}' to number '${val}'`);
     bind<number>(path).toConstantValue(val);
   }
 
-  private bindBoolean(bind: interfaces.Bind, val: boolean, path: string) {
+  private bindBoolean(bind: Bind, val: boolean, path: string) {
     if (this.settings.log) this.logs.push(`Binding '${path}' to boolean '${val}'`);
     bind<boolean>(path).toConstantValue(val);
   }
 
-  private bindArray(bind: interfaces.Bind, val: any[], path: string) {
+  private bindArray(bind: Bind, val: any[], path: string) {
     if (this.settings.typeHints[path] === TypeHint.String) {
       if (this.settings.log) this.logs.push(`Binding '${path}' to string[] '${val}'`);
       bind<string[]>(path).toConstantValue(val as string[]);
@@ -75,7 +80,7 @@ export class EagerBinder {
     }
   }
 
-  private bindUnknown(bind: interfaces.Bind, val: any, path: string) {
+  private bindUnknown(bind: Bind, val: any, path: string) {
     if (typeof val === 'string') {
       this.bindString(bind, val as string, path);
     } else if (typeof val === 'number') {
@@ -89,7 +94,7 @@ export class EagerBinder {
     }
   }
 
-  private bindAllInObject(bind: interfaces.Bind, obj: object, path: string) {
+  private bindAllInObject(bind: Bind, obj: object, path: string) {
     if (this.settings.objects) {
       if (this.settings.log) {
         this.logs.push(`Binding '${path}' to Object '${obj}'`);
@@ -108,8 +113,9 @@ export class EagerBinder {
     }
   }
 
-  public getModuleFunction(): interfaces.ContainerModuleCallBack {
-    return (bind: interfaces.Bind, unbind: interfaces.Unbind) => {
+  public getModuleFunction(): (options: ContainerModuleLoadOptions) => void {
+    return (options: ContainerModuleLoadOptions) => {
+      const { bind } = options;
       this.bindAllInObject(bind, this.all, this.settings.prefix);
     };
   }

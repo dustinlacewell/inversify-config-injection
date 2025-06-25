@@ -8,11 +8,13 @@
     "outDir": "./dist",
     "preserveConstEnums": true,
     "removeComments": true,
-    "lib": ["es2015"],
-    "experimentalDecorators": true
+    "lib": ["es2022"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ],
   "exclude": [
     "node_modules",

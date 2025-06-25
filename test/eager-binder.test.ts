@@ -1,11 +1,8 @@
 import { EagerBinder, EagerBinderSettings, TypeHint } from "../src/eager-binder";
 import defaultEagerBinderModule from "../src/eager-binder";
-import * as chai from "chai";
 import { injectable, inject, optional } from "inversify";
 import { Container } from "inversify";
 import "reflect-metadata";
-
-const expect = chai.expect;
 
 interface Database {
     getConnection(): string;
@@ -75,8 +72,8 @@ describe("EagerBinder", () => {
 	container.load(defaultEagerBinderModule);
 
   	const db = container.get<DefaultDatabase>("DB");
-    expect(db.getConnection()).to.equal("localhost:1234");
-    expect(db.debug).to.be.true;
+    expect(db.getConnection()).toEqual("localhost:1234");
+    expect(db.debug).toBe(true);
   });
   
   it("should load properties with a different root", () => {
@@ -87,7 +84,7 @@ describe("EagerBinder", () => {
 	}).getModule());
 
   	const db = container.get<Database>("DB");
-    expect(db.getConnection()).to.equal("localhost:1234");
+    expect(db.getConnection()).toEqual("localhost:1234");
   });
   
   it("should load properties with a custom prefix binding", () => {
@@ -100,9 +97,8 @@ describe("EagerBinder", () => {
 	});
 	container.load(binder.getModule());
 
-    console.log(binder.getBindingLog().join("\n"));
   	const db = container.get<Database>("DB");
-    expect(db.getConnection()).to.equal("localhost:1234");
+    expect(db.getConnection()).toEqual("localhost:1234");
   });
   
   it("should load arrays", () => {
@@ -118,9 +114,8 @@ describe("EagerBinder", () => {
 	});
 	container.load(binder.getModule());
 
-    console.log(binder.getBindingLog().join("\n"));
   	const db = container.get<Database>("DB");
-    expect(db.getConnection()).to.equal("8.8.8.8:1234,8.8.4.4:1234");
+    expect(db.getConnection()).toEqual("8.8.8.8:1234,8.8.4.4:1234");
   });
   
   it("should load entire objects", () => {
@@ -132,9 +127,8 @@ describe("EagerBinder", () => {
 	});
 	container.load(binder.getModule());
 
-    console.log(binder.getBindingLog().join("\n"));
   	const db = container.get<Database>("DB");
-    expect(db.getConnection()).to.equal('localhost:1234');
+    expect(db.getConnection()).toEqual('localhost:1234');
   });
 
 });

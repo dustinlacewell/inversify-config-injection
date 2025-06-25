@@ -1,5 +1,7 @@
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, ContainerModuleLoadOptions } from 'inversify';
 import { z } from 'zod';
+export type Bind = ContainerModuleLoadOptions["bind"];
+export type Unbind = ContainerModuleLoadOptions["unbind"];
 export declare enum TypeHint {
     String = 0,
     Number = 1
@@ -26,7 +28,7 @@ export declare class EagerBinder {
     private bindArray;
     private bindUnknown;
     private bindAllInObject;
-    getModuleFunction(): interfaces.ContainerModuleCallBack;
+    getModuleFunction(): (options: ContainerModuleLoadOptions) => void;
     getModule(): ContainerModule;
     getBindingLog(): string[];
 }
