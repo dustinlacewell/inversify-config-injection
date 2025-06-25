@@ -18,9 +18,9 @@ export interface EagerBinderSettings {
     schema?: z.ZodObject<any>;
 }
 export declare class EagerBinder {
-    private settings;
     private all;
     private logs;
+    private settings;
     constructor(settings: EagerBinderSettings);
     private bindString;
     private bindNumber;

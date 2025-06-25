@@ -9,9 +9,9 @@ var TypeHint;
     TypeHint[TypeHint["Number"] = 1] = "Number";
 })(TypeHint || (exports.TypeHint = TypeHint = {}));
 class EagerBinder {
-    settings;
     all;
     logs;
+    settings;
     constructor(settings) {
         this.settings = settings;
         if (!this.settings)
