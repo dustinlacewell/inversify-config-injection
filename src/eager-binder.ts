@@ -1,6 +1,6 @@
 import { ContainerModule, ContainerModuleLoadOptions } from 'inversify';
 import * as config from 'config';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export type Bind = ContainerModuleLoadOptions["bind"];
 export type Unbind = ContainerModuleLoadOptions["unbind"];
