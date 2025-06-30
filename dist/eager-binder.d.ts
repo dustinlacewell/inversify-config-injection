@@ -1,5 +1,5 @@
 import { ContainerModule, ContainerModuleLoadOptions } from 'inversify';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 export type Bind = ContainerModuleLoadOptions["bind"];
 export type Unbind = ContainerModuleLoadOptions["unbind"];
 export declare enum TypeHint {
